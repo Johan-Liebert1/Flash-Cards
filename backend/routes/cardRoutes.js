@@ -2,13 +2,17 @@ import express from 'express'
 import mongoose from 'mongoose'
 import CardSet from '../models/cardSetModel.js'
 import Card from '../models/cardModel.js'
+import protect from '../middlewares/authMiddleware.js'
 
 const cardRouter = express.Router()
 
 // /api/cardsets/:setId/cards
 
-cardRouter.get('/:setId/cards', async (req, res) => {
-    const set = await CardSet.findById(req.params.setId).populate('cards')
+cardRouter.get('/:setId/cards', protect, async (req, res) => {
+    const set = await CardSet.findOne({
+        _id: req.params.setId,
+        user: req.user._id
+    }).populate('cards')
 
     if (!set) {
         res.status(404)
@@ -24,23 +28,24 @@ cardRouter.get('/:setId/cards', async (req, res) => {
 
 
 // post multiple cards
-cardRouter.post('/:setId/cards', async (req, res) => {
+cardRouter.post('/:setId/cards', protect, async (req, res) => {
 
     const { cards } = req.body // cards is an array
     
-    const setExists = await CardSet.findById(req.params.setId)
+    const setExists = await CardSet.findById({
+        _id: req.params.setId,
+        user: req.user._id
+    })
 
     if (!setExists) {
         res.status(404)
-        res.json({message : "Set not found"})
+        res.json({ message : "Set not found" })
     }
 
     else {
         const createdCards = await Card.insertMany(cards)
-
-        console.log(createdCards)
         
-        for (let i = 0; i < createdCards.length; i++){
+        for (let i = 0; i < createdCards.length; i++) {
             setExists.cards.push(createdCards[i]._id)
         }
 
@@ -58,9 +63,12 @@ cardRouter.put('/:setId/cards', (req, res) => {
 })
 
 // delete all cards from a set
-cardRouter.delete('/:setId/cards', async (req, res) => {
+cardRouter.delete('/:setId/cards', protect, async (req, res) => {
 
-    const setExists = await CardSet.findById(req.params.setId)
+    const setExists = await CardSet.findById({
+        _id: req.params.setId,
+        user: req.user._id
+    })
 
     if (!setExists) {
         res.status(404)
@@ -87,11 +95,14 @@ cardRouter.delete('/:setId/cards', async (req, res) => {
 
 
 // post only one card
-cardRouter.post('/:setId/card', async (req, res) => {
+cardRouter.post('/:setId/card', protect, async (req, res) => {
 
     const {question, answer} = req.body
 
-    const setExists = await CardSet.findById(req.params.setId)
+    const setExists = await CardSet.findById({
+        _id: req.params.setId,
+        user: req.user._id
+    })
 
     if (!setExists) {
         res.status(404)
@@ -100,8 +111,6 @@ cardRouter.post('/:setId/card', async (req, res) => {
 
     else {
         const createdCard = await Card.create({ question, answer })
-
-        console.log(createdCard)
 
         setExists.cards.push(createdCard._id)
         await setExists.save()
@@ -114,7 +123,10 @@ cardRouter.post('/:setId/card', async (req, res) => {
 
 
 cardRouter.delete('/:setId/card/:cardId', async (req, res) => {
-    const setExists = CardSet.findById(req.params.setId)
+    const setExists = CardSet.findById({
+        _id : req.params.setId,
+        user: req.user._id
+    })
 
     if (!setExists) {
         res.status(404)

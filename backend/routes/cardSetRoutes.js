@@ -1,30 +1,44 @@
 import express from 'express'
 
 import CardSet from '../models/cardSetModel.js'
+import protect from '../middlewares/authMiddleware.js'
+import mongoose from 'mongoose'
 
 const cardSetRouter = express.Router()
 
-cardSetRouter.get('/', async (req, res) => {
-    const allSets = await CardSet.find({})
+cardSetRouter.get('/', protect, async (req, res) => {
+    
+    const allSets = await CardSet.find({ user: req.user._id })
 
     res.json(allSets)
 
 })
 
 
-cardSetRouter.post('/', async (req, res) => {
+cardSetRouter.post('/', protect, async (req, res) => {
     try {
         // a user cannot have two sets with the same name
         // two users can have their own sets with the same name
-        const setExists = await CardSet.findOne({ setName: req.body.setName })
+        console.log('req.user', req.user)
+
+        const setExists = await CardSet.findOne({ 
+            user: mongoose.Types.ObjectId(req.user._id),
+            setName: req.body.setName 
+        })
+
+        console.log('setExists = ', setExists)
 
         if (setExists) {
             res.status(404)
-            res.json({"message":"Set with that name already exists"})
+            res.json({ "message":"Set with that name already exists" })
         }
 
         else {
-            const createdSet = await CardSet.create({ setName : req.body.setName })
+            const createdSet = await CardSet.create({ 
+                user: req.user._id,
+                setName : req.body.setName 
+            })
+
             res.status(201)
             res.json(createdSet)
         }
@@ -43,9 +57,12 @@ cardSetRouter.put('/', async (req, res) => {
 
 
 
-cardSetRouter.get('/:setId', async (req, res) => {
+cardSetRouter.get('/:setId', protect, async (req, res) => {
     try {
-        const set = await CardSet.findById(req.params.setId)
+        const set = await CardSet.findOne({ 
+            _id: req.params.setId,
+            user: req.user._id
+        })
 
         if (!set) {
             res.status(404)
@@ -71,13 +88,15 @@ cardSetRouter.post('/:setId', (req, res) => {
 })
 
 
-cardSetRouter.put('/:setId', async (req, res) => {
+cardSetRouter.put('/:setId', protect, async (req, res) => {
     // only set name can be updated
 
-    const setExists = await CardSet.findOne({ setName: req.body.setName })
+    const setExists = await CardSet.findOne({ 
+        user: req.user._id,
+        setName: req.body.setName 
+    })
 
     if ( setExists ) {
-        console.log('inside the if in if setExists')
         res.status(400)
         res.json({ message : "Set with that name already exists" })
     }
@@ -87,12 +106,22 @@ cardSetRouter.put('/:setId', async (req, res) => {
         try {
             const newSetName = req.body.setName
 
-            const updatedSet = await CardSet.findByIdAndUpdate(req.params.setId, {
+            const updatedSet = await CardSet.findOneAndUpdate({
+                _id: req.params.setId,
+                user: req.user._id
+            }, {
                 setName: newSetName
             }, { new: true })
 
-            res.status(200)
-            res.json({ "message": "Updated Successfully", newSet : updatedSet })
+            if (updatedSet){
+                res.status(200)
+                res.json({ "message": "Updated Successfully", newSet : updatedSet })
+            }
+            
+            else {
+                res.status(404)
+                res.json({ message : "Set not found" })
+            }
 
         }
 
@@ -104,10 +133,23 @@ cardSetRouter.put('/:setId', async (req, res) => {
 })
 
 
-cardSetRouter.delete('/:setId', async (req, res) => {
-    await CardSet.findByIdAndDelete(req.params.setId)
-    res.status(200)
-    res.json({message : "Set Deleted"})
+cardSetRouter.delete('/:setId', protect, async (req, res) => {
+
+    const setExisted = await CardSet.findOneAndDelete({
+        _id : req.params.setId,
+        user: req.user._id
+    })
+
+    
+    if (setExisted){
+        res.status(200)
+        res.json({ message : "Set Deleted" })
+    }
+
+    else {
+        res.status(404)
+        res.json({ message : "Set not found" })
+    }
 })
 
 

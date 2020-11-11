@@ -1,4 +1,4 @@
-import express, { response } from 'express'
+import express from 'express'
 import User from '../models/userModel.js'
 import getToken from '../auth/getToken.js'
 
@@ -7,7 +7,7 @@ const userRouter = express.Router()
 
 userRouter.post('/register', async (req, res) => {
 
-    const userExists = User.findOne({ username: req.body.username })
+    const userExists = await User.findOne({ username: req.body.username })
 
     if (userExists) {
         res.status(400)
