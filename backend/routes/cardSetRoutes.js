@@ -1,7 +1,5 @@
 import express from 'express'
-import mongoose from 'mongoose'
 
-import Card from '../models/cardModel.js'
 import CardSet from '../models/cardSetModel.js'
 
 const cardSetRouter = express.Router()
@@ -47,7 +45,7 @@ cardSetRouter.put('/', async (req, res) => {
 
 cardSetRouter.get('/:setId', async (req, res) => {
     try {
-        const set = await CardSet.findById(req.params.setId)
+        const set = await CardSet.findById(req.params.setId).populate('cards')
 
         if (!set) {
             res.status(404)
