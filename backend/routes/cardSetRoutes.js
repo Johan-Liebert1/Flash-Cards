@@ -45,7 +45,7 @@ cardSetRouter.put('/', async (req, res) => {
 
 cardSetRouter.get('/:setId', async (req, res) => {
     try {
-        const set = await CardSet.findById(req.params.setId).populate('cards')
+        const set = await CardSet.findById(req.params.setId)
 
         if (!set) {
             res.status(404)

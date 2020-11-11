@@ -1,4 +1,5 @@
 import express from 'express'
+import mongoose from 'mongoose'
 import CardSet from '../models/cardSetModel.js'
 import Card from '../models/cardModel.js'
 
@@ -7,7 +8,7 @@ const cardRouter = express.Router()
 // /api/cardsets/:setId/cards
 
 cardRouter.get('/:setId/cards', async (req, res) => {
-    const set = await CardSet.findById(req.params.setId)
+    const set = await CardSet.findById(req.params.setId).populate('cards')
 
     if (!set) {
         res.status(404)
@@ -20,6 +21,70 @@ cardRouter.get('/:setId/cards', async (req, res) => {
     }
 
 })
+
+
+// post multiple cards
+cardRouter.post('/:setId/cards', async (req, res) => {
+
+    const { cards } = req.body // cards is an array
+    
+    const setExists = await CardSet.findById(req.params.setId)
+
+    if (!setExists) {
+        res.status(404)
+        res.json({message : "Set not found"})
+    }
+
+    else {
+        const createdCards = await Card.insertMany(cards)
+
+        console.log(createdCards)
+        
+        for (let i = 0; i < createdCards.length; i++){
+            setExists.cards.push(createdCards[i]._id)
+        }
+
+        await setExists.save()
+
+        res.status(201)
+        res.json({ message: "Card created successfully" })
+    }
+
+})
+
+cardRouter.put('/:setId/cards', (req, res) => {
+    res.status(400)
+    res.json({ message: "PUT not supported on this route" })
+})
+
+// delete all cards from a set
+cardRouter.delete('/:setId/cards', async (req, res) => {
+
+    const setExists = await CardSet.findById(req.params.setId)
+
+    if (!setExists) {
+        res.status(404)
+        res.json({message : "Set not found"})
+    }
+
+    else {
+        // iterate over setExists.cards in reverse and keep deleting the card 
+        // as well as the card id from the array
+        for (let i = setExists.cards.length - 1; i >= 0; i--) {
+            await Card.findByIdAndDelete(setExists.cards[i])
+            setExists.cards.pop()
+        }
+        setExists.save()
+
+        res.status(200)
+        res.json({messgae : "All cards Deleted"})
+    }
+
+})
+
+
+// GET and PUT on a single card is done in singleCardRoutes.js
+
 
 // post only one card
 cardRouter.post('/:setId/card', async (req, res) => {
@@ -48,33 +113,27 @@ cardRouter.post('/:setId/card', async (req, res) => {
 })
 
 
-// post multiple cards
-cardRouter.post('/:setId/cards', async (req, res) => {
-
-    const { cards } = req.body // cards is an array
-    
-    const setExists = await CardSet.findById(req.params.setId)
+cardRouter.delete('/:setId/card/:cardId', async (req, res) => {
+    const setExists = CardSet.findById(req.params.setId)
 
     if (!setExists) {
         res.status(404)
-        res.json({message : "Set not found"})
+        res.json({message: "Set not found"})
     }
 
     else {
-        const createdCards = await Card.insertMany(cards)
+        await setExists.updateOne({ 
+            $pull : { cards : mongoose.Types.ObjectId(req.params.cardId) } 
+        })
 
-        console.log(createdCards)
-        
-        for (let i = 0; i < createdCards.length; i++){
-            setExists.cards.push(createdCards[i]._id)
-        }
-        
-        await setExists.save()
+        await Card.findByIdAndDelete(req.params.cardId)
 
-        res.status(201)
-        res.json({ message: "Card created successfully" })
+        res.status(200)
+        res.json({message : "Card Deleted"})
+
     }
-
 })
+
+
 
 export default cardRouter
