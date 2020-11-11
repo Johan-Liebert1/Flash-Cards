@@ -5,6 +5,7 @@ import { connectDB } from './config/db.js'
 import cardSetRouter from './routes/cardSetRoutes.js'
 import cardRouter from './routes/cardRoutes.js'
 import singleCardRouter from './routes/singleCardRoute.js'
+import userRouter from './routes/userRouter.js'
 
 dotenv.config()
 
@@ -19,5 +20,6 @@ app.get('/', (req, res) => res.json({"message": "API Connected..."}))
 app.use('/api/cardsets', cardSetRouter)
 app.use('/api/cardsets', cardRouter)
 app.use('/api/cards', singleCardRouter)
+app.use('/user', userRouter)
 
 app.listen(port, () => console.log(`Server Listening on PORT : ${port}`))
