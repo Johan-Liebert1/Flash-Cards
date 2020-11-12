@@ -11,7 +11,7 @@ userRouter.post('/register', async (req, res) => {
 
     if (userExists) {
         res.status(400)
-        res.json({message : "User with that username already exists"})
+        res.json({ message : "User with that username already exists" })
     }
 
     else {
