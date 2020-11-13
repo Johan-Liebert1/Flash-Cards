@@ -5,8 +5,8 @@ import { userLoginReducer, userRegisterReducer } from './reducers/userReducers'
 import { cardSetReducers } from './reducers/cardSetReducers'
 
 const reducers = combineReducers({
-    userLogin : userLoginReducer,
-    userRegister: userRegisterReducer,
+    userLoginInfo: userLoginReducer,
+    userRegisterInfo: userRegisterReducer,
     cardSets: cardSetReducers
 })
 

@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { userLogin,  userRegister } from '../actions/userActions'
 
 const HomeScreen = ({ history, location }) => {
@@ -10,6 +10,18 @@ const HomeScreen = ({ history, location }) => {
     const [password, setPassword] = useState('')
 
     const dispatch = useDispatch()
+
+    const { userLoginInfo } = useSelector(state => state.userLoginInfo)
+
+    useEffect(() => {
+
+        if (userLoginInfo) {
+
+            history.push('/cardsets')
+
+        }
+
+      }, [userLoginInfo])
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -21,9 +33,6 @@ const HomeScreen = ({ history, location }) => {
         else {
             dispatch(userRegister(username, password))
         }
-
-        history.push('/cardsets')
-
     }
 
     return (

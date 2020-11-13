@@ -3,6 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom'
 
 import HomeScreen from './screens/LoginScreen'
 import CardSetsScreen from './screens/CardSetsScreen'
+import CreateSetScreen from './screens/CreateSetScreen';
 
 function App() {
     return (
@@ -18,6 +19,12 @@ function App() {
                 exact
                 path = {`/cardsets`}
                 render = { (routeProps) => <CardSetsScreen {...routeProps} /> }
+            />
+
+            <Route 
+                exact
+                path = '/cardsets/create'
+                render = { (routeProps) => <CreateSetScreen {...routeProps} /> }
             />
 
         </BrowserRouter>
