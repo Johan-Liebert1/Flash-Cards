@@ -26,8 +26,6 @@ cardSetRouter.post('/', protect, async (req, res) => {
             setName: req.body.setName 
         })
 
-        console.log('setExists = ', setExists)
-
         if (setExists) {
             res.status(404)
             res.json({ "message":"Set with that name already exists" })

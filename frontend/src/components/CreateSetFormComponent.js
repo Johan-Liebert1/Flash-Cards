@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { createNewCardSet } from '../actions/cardSetActions'
 
 import '../styles/CreateSetFormComponentStyles.css'
 
 const CreateSetFormComponent = () => {
+    const dispatch = useDispatch()
+    const { userLoginInfo } = useSelector(state => state.userLoginInfo)
 
     const [setName, setSetName] = useState('')
     const [data, setData] = useState('')
@@ -10,20 +14,20 @@ const CreateSetFormComponent = () => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        let cardData = []
+        let cardsList = []
 
         let splitted_data = data.split('\n')
         
         for (let i = 0; i < splitted_data.length; i++) {
             const [question, answer] = splitted_data[i].split(seperator)
 
-            cardData.push({
+            cardsList.push({
                 question : question.trim(), answer : answer.trim()
             })
-            
+
         }
 
-        console.log(cardData)
+        dispatch(createNewCardSet(userLoginInfo.token, setName, cardsList))
 
     }
 
@@ -36,7 +40,7 @@ const CreateSetFormComponent = () => {
                         <label htmlFor="setName">Enter a unique Set Name</label>
                         <input 
                             type="text" 
-                            class="form-control" 
+                            className="form-control" 
                             id="setName" 
                             placeholder="Set Name" 
                             value = {setName}
@@ -53,7 +57,7 @@ const CreateSetFormComponent = () => {
                     <div className="form-group col-md-8">
                         <label htmlFor="content">Question and Answers Seperated By a Symbol</label>
                         <textarea 
-                            class="form-control" 
+                            className="form-control" 
                             id="contenet" 
                             placeholder="Question and Answers Seperated By a Symbol"
                             value = {data}
@@ -73,7 +77,7 @@ const CreateSetFormComponent = () => {
                         <label htmlFor="seperator">Seperator</label>
                         <input 
                             type="text" 
-                            class="form-control" 
+                            className="form-control" 
                             id="seperator" 
                             placeholder="Seperator" 
                             value = {seperator}

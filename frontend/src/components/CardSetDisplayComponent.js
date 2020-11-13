@@ -2,9 +2,15 @@ import React from 'react'
 
 import '../styles/CardSetDisplayComponentStyles.css'
 
-const CardSetDisplayComponent = ({ index, cardSet }) => {
+const CardSetDisplayComponent = ({ index, cardSet, setId }) => {
+
+    const redirectToCards = (e) => {
+        console.log(setId)
+    }
+
     return (
-        <div className = 'card-container col-md-4'>
+        <>
+        <div className = 'card-container col-md-3' onClick = {redirectToCards}>
             <div id = 'index'>
                 <h1> {index > 9 ? index : `0${index}`} </h1>
             </div>
@@ -28,6 +34,8 @@ const CardSetDisplayComponent = ({ index, cardSet }) => {
             </div>
 
         </div>
+        <div className = 'col-md-1'></div>
+        </>
     )
 }
 

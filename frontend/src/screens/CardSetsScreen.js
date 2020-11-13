@@ -29,6 +29,7 @@ const CardSetsScreen = () => {
                                 index={index + 1} 
                                 key={set._id} 
                                 cardSet={set}
+                                setId = {set._id}
                             />
                         )
                     }
