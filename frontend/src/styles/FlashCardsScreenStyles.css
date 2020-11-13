@@ -1,0 +1,28 @@
+.card-btn-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-row {
+    width: 100%;
+}
+
+#buttons-and-index {
+    display: flex;
+    width: 50%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#left-arrow:hover {
+    cursor: pointer;
+    color: rgb(98, 110, 227);
+}
+
+#right-arrow:hover {
+    cursor: pointer;
+    color:#16a085;
+}

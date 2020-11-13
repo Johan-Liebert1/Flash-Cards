@@ -30,6 +30,7 @@ const CardSetsScreen = () => {
                                 key={set._id} 
                                 cardSet={set}
                                 setId = {set._id}
+                                setName = {set.setName}
                             />
                         )
                     }

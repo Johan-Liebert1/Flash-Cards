@@ -1,12 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getCardsFromSet } from '../actions/cardActions'
+import { withRouter } from 'react-router-dom'
 
 import '../styles/CardSetDisplayComponentStyles.css'
 
-const CardSetDisplayComponent = ({ index, cardSet, setId }) => {
+const CardSetDisplayComponent = ({ index, cardSet, setId, setName, history }) => {
+    const dispatch = useDispatch()
+    const { userLoginInfo } = useSelector(state => state.userLoginInfo)
+    const { cards } = useSelector(state => state.cards)
 
-    const redirectToCards = (e) => {
-        console.log(setId)
+    const redirectToCards = () => {
+        dispatch( getCardsFromSet(userLoginInfo.token, setId) )    
     }
+
+    useEffect(() => {
+        if (cards) {
+            history.push(`/cardsets/${setName}/cards`)
+        }
+    }, [cards] )
 
     return (
         <>
@@ -39,4 +51,4 @@ const CardSetDisplayComponent = ({ index, cardSet, setId }) => {
     )
 }
 
-export default CardSetDisplayComponent
+export default withRouter(CardSetDisplayComponent)
