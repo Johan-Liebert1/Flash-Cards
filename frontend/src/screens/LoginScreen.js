@@ -22,6 +22,8 @@ const HomeScreen = ({ history, location }) => {
             dispatch(userRegister(username, password))
         }
 
+        history.push('/cardsets')
+
     }
 
     return (

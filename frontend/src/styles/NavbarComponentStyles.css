@@ -1,0 +1,35 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container-new {
+    width: 85%;
+    margin: 0 auto;
+    padding: 0.5rem 0;
+}
+
+#other-links {
+    display: flex;
+    width: 50%;
+    justify-content: space-between;
+}
+
+.nav-link {
+    color: rgb(220, 220, 220);
+}
+
+.nav-link:hover {
+    color: white;
+    border-bottom: 1px solid rgb(98, 110, 227);
+}
+
+.logo {
+    color: white;
+}
+
+.logo:hover {
+    text-decoration: none;
+    color: rgb(220, 220, 220);
+}

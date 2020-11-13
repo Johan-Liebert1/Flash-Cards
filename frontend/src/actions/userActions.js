@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const userLogin = (username, password) => async (dispatch) => {
     try {
-        dispatch({ type: "USER_LOGIN_REQUEST" })
+        await dispatch({ type: "USER_LOGIN_REQUEST" })
 
         const config = {
             headers : {
@@ -12,16 +12,14 @@ export const userLogin = (username, password) => async (dispatch) => {
 
         const { data } = await axios.post('/user/login', { username, password }, config)
 
-        console.log('login data = ', data)
-
-        dispatch({
+        await dispatch({
             type: 'USER_LOGIN_SUCCESS',
             payload: data
         })
     }
 
     catch (error) {
-        dispatch({
+        await dispatch({
             type: 'USER_LOGIN_FAIL',
             paylaod: error
         })

@@ -1,21 +1,26 @@
 import React from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
-import { Provider } from 'react-redux'
 
-import store from './store'
 import HomeScreen from './screens/LoginScreen'
+import CardSetsScreen from './screens/CardSetsScreen'
 
 function App() {
     return (
-        <Provider store = {store}>
-            <BrowserRouter>
-                <Route
-                    exact
-                    path = '/'
-                    render = { (routeProps) => <HomeScreen {...routeProps} /> }
-                />
-            </BrowserRouter>
-        </Provider>
+        <BrowserRouter>
+
+            <Route
+                exact
+                path = '/'
+                render = { (routeProps) => <HomeScreen {...routeProps} /> }
+            />
+
+            <Route
+                exact
+                path = {`/cardsets`}
+                render = { (routeProps) => <CardSetsScreen {...routeProps} /> }
+            />
+
+        </BrowserRouter>
     );
 }
 
