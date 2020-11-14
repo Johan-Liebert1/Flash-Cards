@@ -94,7 +94,7 @@ cardSetRouter.put('/:setId', protect, async (req, res) => {
         setName: req.body.setName 
     })
 
-    if ( setExists ) {
+    if ( setExists && setExists._id !== mongoose.Types.ObjectId(req.params.setId) ) {
         res.status(400)
         res.json({ message : "Set with that name already exists" })
     }

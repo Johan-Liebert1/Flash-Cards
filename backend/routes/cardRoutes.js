@@ -122,7 +122,7 @@ cardRouter.post('/:setId/card', protect, async (req, res) => {
 })
 
 
-cardRouter.delete('/:setId/card/:cardId', async (req, res) => {
+cardRouter.delete('/:setId/card/:cardId', protect, async (req, res) => {
     const setExists = CardSet.findById({
         _id : req.params.setId,
         user: req.user._id

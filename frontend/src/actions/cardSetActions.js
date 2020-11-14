@@ -64,3 +64,62 @@ export const createNewCardSet = (userToken, setName, cardsList) => async (dispat
         })
     }
 }
+
+
+export const editCardSetNameAction = (userToken, setId, newName) => async (dispatch) => {
+    try {
+        dispatch({ type: 'CARDSET_EDIT_NAME_REQUEST' })
+
+        const config = {
+
+            headers: {
+                authorization : `Bearer ${userToken}`
+            },
+
+            'Content-Type' : 'application/json'
+        }
+
+        const { data } = await axios.put(`/api/cardsets/${setId}`, 
+                                            {setName : newName}, 
+                                            config
+                                        )
+
+        dispatch({ type : 'CARDSET_EDIT_NAME_SUCCESS', payload: { setId, newName } })
+    }
+
+    catch (error) {
+        dispatch({
+            type: 'CARDSET_EDIT_NAME_FAIL',
+            payload: error
+        })
+    }
+
+}
+
+
+export const deleteCardSetAction = (userToken, setId) => async (dispatch) => {
+    try {
+        dispatch({ type: 'CARDSET_DELETE_REQUEST' })
+
+        const config = {
+
+            headers: {
+                authorization : `Bearer ${userToken}`
+            }        
+        }
+
+        const { data } = await axios.delete(`/api/cardsets/${setId}`, config)
+        console.log('cardsetdelete data = ', data)
+
+        // create a reducer to filter this out from the state
+        dispatch({ type : 'CARDSET_DELETE_SUCCESS', payload: setId })
+    }
+
+    catch (error) {
+        dispatch({
+            type: 'CARDSET_DELETE_FAIL',
+            payload: error
+        })
+    }
+
+}

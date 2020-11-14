@@ -1,5 +1,7 @@
 export const cardSetReducers = (state = {}, action) => {
+
     switch (action.type) {
+
         case 'ALL_CARDSETS_REQUEST':
             return { loading: true }
 
@@ -24,7 +26,29 @@ export const cardSetReducers = (state = {}, action) => {
 
         case 'CREATE_CARDSET_FAIL':
             return { loading: false, error : action.payload }
+        
+        
+        case 'CARDSET_EDIT_NAME_REQUEST':
+            return { loading: true, cardSets : state.cardSets }
 
+
+        case 'CARDSET_EDIT_NAME_SUCCESS':
+            const editedSet = state.cardSets.map(set => {
+                if (set._id === action.payload.setId) {
+                    set.setName = action.payload.newName
+                }
+
+                return set
+            })
+            return { loading: true, cardSets : editedSet }
+
+        case 'CARDSET_DELETE_REQUEST':
+            return { loading: true, cardSets : state.cardSets }
+
+
+        case 'CARDSET_DELETE_SUCCESS':
+            const filteredSet = state.cardSets.filter(set => set._id !== action.payload)
+            return { loading: false, cardSets : filteredSet }
 
         default:
             return state

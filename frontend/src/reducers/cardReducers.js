@@ -12,6 +12,13 @@ export const cardsReducers = (state = {}, action) => {
         case 'DELETE_CARDS_FROM_STATE':
             return {}
 
+        case 'DELETE_CARD_REQUEST':
+            return { loading: true, cards: state.cards }
+
+        case 'DELETE_CARD_SUCCESS':
+            const filteredCards = state.cards.filter(card => card._id !== action.payload.cardId)
+            return { loading: false, cards: filteredCards }
+
 
         default:
             return state

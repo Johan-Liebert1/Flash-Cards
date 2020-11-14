@@ -98,6 +98,33 @@ export const editCardAction = (userToken, question, answer, cardId, setId) => as
 }
 
 
+export const deleteCardAction = (userToken, cardId, setId) => async (dispatch) => {
+    try {
+        dispatch({ type: 'DELETE_CARD_REQUEST' })
+
+        const config = {
+            headers : {
+                authorization : `Bearer ${userToken}`
+            }      
+        }
+
+        const {data} = await axios.delete(`/api/cardsets/${setId}/card/${cardId}`, config)
+
+        dispatch({
+            type: 'DELETE_CARD_SUCCESS',
+            payload: cardId
+        })
+    }
+
+    catch (error) {
+        dispatch({
+            type: 'DELETE_CARD_FAIL',
+            payload: error
+        })
+    }
+}
+
+
 export const removeCardsFromState = () => (dispatch) => {
     dispatch({ type: 'DELETE_CARDS_FROM_STATE' })
 }
