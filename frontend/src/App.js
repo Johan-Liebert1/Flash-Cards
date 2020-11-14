@@ -5,6 +5,7 @@ import HomeScreen from './screens/LoginScreen'
 import CardSetsScreen from './screens/CardSetsScreen'
 import CreateSetScreen from './screens/CreateSetScreen';
 import FlashCardsScreen from './screens/FlashCardsScreen';
+import EditCardsScreen from './screens/EditCardsScreen';
 
 function App() {
     return (
@@ -18,7 +19,7 @@ function App() {
 
             <Route
                 exact
-                path = {`/cardsets`}
+                path = '/cardsets'
                 render = { (routeProps) => <CardSetsScreen {...routeProps} /> }
             />
 
@@ -30,8 +31,14 @@ function App() {
 
             <Route
                 exact
-                path = '/cardsets/:setName/cards'
+                path = '/cardsets/:setName/:setId/cards'
                 render = { (routeProps) => <FlashCardsScreen {...routeProps} /> } 
+            />
+
+            <Route
+                exact
+                path = '/cardsets/:setName/:setId/cards/edit'
+                render = { (routeProps) => <EditCardsScreen {...routeProps} /> }
             />
 
         </BrowserRouter>

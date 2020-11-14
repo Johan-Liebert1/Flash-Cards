@@ -14,7 +14,7 @@
     transition: all ease 0.3s;
 }
 
-.card-container:hover {
+.flash-card-container:hover {
     cursor: pointer;
     transform: translateY(-5%);
     transition: all ease 0.3s;

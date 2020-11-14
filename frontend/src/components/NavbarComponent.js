@@ -35,16 +35,14 @@ const NavbarComponent = ({ history, location, match, homeNavbar }) => {
                     </div>
 
                     <div >
-                        <Link to = '/cardsets' className = 'nav-link'>
+                        <Link 
+                            to = {`/cardsets/${match.params.setName}/${match.params.setId}/cards/edit`} 
+                            className = 'nav-link'
+                        >
                             <span> Edit Cards </span>
                         </Link>
                     </div>
 
-                    <div >
-                        <Link to = '/cardsets' className = 'nav-link'>
-                            <span> Delete Cards </span>
-                        </Link>
-                    </div>
                     </>
                 }
                 </div>

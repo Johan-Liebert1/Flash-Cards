@@ -22,6 +22,7 @@ const FlashCardsScreen = () => {
         <div>
             <NavbarComponent />
             <div className = 'container mt-3 '>
+                { cards ? cards.length === 0 ? <h1>This set does not have any cards</h1> :
                 <div className = 'card-btn-container'>
 
                     <div className = 'row card-row'>
@@ -53,7 +54,10 @@ const FlashCardsScreen = () => {
                             </svg>
                         </div>
                     </div>
-                </div>
+                </div> :
+                // cards doesn't exist
+                <h1>No Cards Found</h1>
+                }
             </div>
         </div>
     )

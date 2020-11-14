@@ -9,6 +9,9 @@ export const cardsReducers = (state = {}, action) => {
         case 'CARDS_FROM_SET_FAIL':
             return { loading : false, error: action.payload }
 
+        case 'DELETE_CARDS_FROM_STATE':
+            return {}
+
 
         default:
             return state

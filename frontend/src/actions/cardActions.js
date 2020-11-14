@@ -65,3 +65,39 @@ export const getCardsFromSet = (userToken, setId) => async (dispatch) => {
         })
     }
 }
+
+
+export const editCardAction = (userToken, question, answer, cardId, setId) => async (dispatch) => {
+    try {
+        dispatch({ type: 'EDIT_CARD_REQUEST' })
+
+        const config = {
+            headers : {
+                authorization : `Bearer ${userToken}`
+            },
+
+            'Content-Type' : 'application/json'
+        }
+
+        await axios.put(`/api/cards/${cardId}`, {question, answer} ,config)
+
+        dispatch({
+            type: 'EDIT_CARD_SUCCESS'
+        })
+
+        await dispatch( getCardsFromSet(userToken, setId) )
+
+    }
+
+    catch (error) {
+        dispatch({
+            type: 'EDIT_CARD_FAIL',
+            payload: error
+        })
+    }
+}
+
+
+export const removeCardsFromState = () => (dispatch) => {
+    dispatch({ type: 'DELETE_CARDS_FROM_STATE' })
+}

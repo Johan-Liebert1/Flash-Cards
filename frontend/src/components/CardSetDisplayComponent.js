@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCardsFromSet } from '../actions/cardActions'
+import { getCardsFromSet, removeCardsFromState } from '../actions/cardActions'
 import { withRouter } from 'react-router-dom'
 
 import '../styles/CardSetDisplayComponentStyles.css'
@@ -11,14 +11,17 @@ const CardSetDisplayComponent = ({ index, cardSet, setId, setName, history }) =>
     const { cards } = useSelector(state => state.cards)
 
     const redirectToCards = () => {
-        dispatch( getCardsFromSet(userLoginInfo.token, setId) )    
+        dispatch( getCardsFromSet(userLoginInfo.token, setId) )   
+        history.push(`/cardsets/${setName}/${setId}/cards`)
     }
 
-    useEffect(() => {
-        if (cards) {
-            history.push(`/cardsets/${setName}/cards`)
-        }
-    }, [cards] )
+    // useEffect(() => {
+
+    //     if (cards) {
+    //         dispatch(removeCardsFromState())
+    //     }
+
+    // }, [cards] ) //, [setName, setId, cards, history] 
 
     return (
         <>
