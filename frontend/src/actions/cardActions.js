@@ -14,13 +14,12 @@ export const addCardsToSet = (userToken, setId, cardsList) => async (dispatch) =
             }
         }
 
-        const { data } = axios.post(
+        const { data } = await axios.post(
                             `/api/cardsets/${setId}/cards`, 
                             {cards : cardsList},
                             config
                         )
         
-        console.log('cards post data = ', data)
 
         dispatch({
             type: 'ADD_CARDS_TO_SET_SUCCESS',
@@ -40,7 +39,6 @@ export const addCardsToSet = (userToken, setId, cardsList) => async (dispatch) =
 
 export const getCardsFromSet = (userToken, setId) => async (dispatch) => {
     try {
-        console.log('getcardsfromse')
         dispatch({ type: 'CARDS_FROM_SET_REQUEST' })
 
         const config = {
@@ -67,7 +65,7 @@ export const getCardsFromSet = (userToken, setId) => async (dispatch) => {
 }
 
 
-export const editCardAction = (userToken, question, answer, cardId, setId) => async (dispatch) => {
+export const editCardAction = (userToken, question, answer, cardId) => async (dispatch) => {
     try {
         dispatch({ type: 'EDIT_CARD_REQUEST' })
 
@@ -82,11 +80,9 @@ export const editCardAction = (userToken, question, answer, cardId, setId) => as
         await axios.put(`/api/cards/${cardId}`, {question, answer} ,config)
 
         dispatch({
-            type: 'EDIT_CARD_SUCCESS'
+            type: 'EDIT_CARD_SUCCESS',
+            payload: { cardId, question, answer }
         })
-
-        await dispatch( getCardsFromSet(userToken, setId) )
-
     }
 
     catch (error) {

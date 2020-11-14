@@ -5,8 +5,8 @@ import NavbarComponent from '../components/NavbarComponent'
 const CreateSetScreen = () => {
     return (
         <div>
-            <NavbarComponent />
-            <CreateSetFormComponent />
+            <NavbarComponent homeNavbar />
+            <CreateSetFormComponent isCreatingSet />
         </div>
     )
 }

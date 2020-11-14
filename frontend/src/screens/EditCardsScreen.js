@@ -1,15 +1,24 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import EditCardsComponent from '../components/EditCardsComponent'
 import NavbarComponent from '../components/NavbarComponent'
 
-const EditCardsScreen = () => {
+const EditCardsScreen = ({ match }) => {
     const { cards } = useSelector(state => state.cards)
 
     return (
         <div>
             <NavbarComponent />
+
             <div className = 'container mt-4'>
+
+                <Link 
+                    to = {`/cardsets/${match.params.setName}/${match.params.setId}/cards`}
+                >
+                    {'< Go To Cards'}
+                </Link>
+
                 <div className = 'row'>
                 { !cards ? <h1>Nothing to edit as there are no cards in this set</h1>:
 

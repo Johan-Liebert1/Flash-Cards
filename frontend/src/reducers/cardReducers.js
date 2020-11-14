@@ -12,6 +12,19 @@ export const cardsReducers = (state = {}, action) => {
         case 'DELETE_CARDS_FROM_STATE':
             return {}
 
+        case 'EDIT_CARD_REQUEST':
+            return { loading: true, cards: state.cards }       
+        
+        case 'EDIT_CARD_SUCCESS':
+            const editedCards = state.cards.map(card => {
+                if (card._id === action.payload.cardId) {
+                    card.question = action.payload.question
+                    card.answer = action.payload.answer
+                }
+                return card
+            })
+            return { loading: false, cards: editedCards }
+
         case 'DELETE_CARD_REQUEST':
             return { loading: true, cards: state.cards }
 

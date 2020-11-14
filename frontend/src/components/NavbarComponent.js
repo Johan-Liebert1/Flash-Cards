@@ -29,7 +29,10 @@ const NavbarComponent = ({ history, location, match, homeNavbar }) => {
                 {!homeNavbar &&
                     <>
                     <div >
-                        <Link to = '/cardsets' className = 'nav-link'>
+                        <Link 
+                            to = {`/cardsets/${match.params.setName}/${match.params.setId}/cards/add`} 
+                            className = 'nav-link'
+                        >
                             <span> Add Cards </span>
                         </Link>
                     </div>

@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { addCardsToSet } from '../actions/cardActions'
 import { createNewCardSet } from '../actions/cardSetActions'
 
 import '../styles/CreateSetFormComponentStyles.css'
 
-const CreateSetFormComponent = () => {
+const CreateSetFormComponent = ({ isCreatingSet, match }) => {
     const dispatch = useDispatch()
     const { userLoginInfo } = useSelector(state => state.userLoginInfo)
 
@@ -27,30 +29,39 @@ const CreateSetFormComponent = () => {
 
         }
 
-        dispatch(createNewCardSet(userLoginInfo.token, setName, cardsList))
+        if (isCreatingSet){
+            dispatch(createNewCardSet(userLoginInfo.token, setName, cardsList))
+        }
+
+        else {
+            // just adding cards to the set
+            dispatch(addCardsToSet(userLoginInfo.token, match.params.setId, cardsList))
+        }
 
     }
 
     return (
         <div className = 'container mt-5'>
             <form onSubmit = {submitHandler}>
-                <div className = 'form-row mb-4'>
+                { isCreatingSet &&
+                    <div className = 'form-row mb-4'>
 
-                    <div className="form-group col-md-4">
-                        <label htmlFor="setName">Enter a unique Set Name</label>
-                        <input 
-                            type="text" 
-                            className="form-control" 
-                            id="setName" 
-                            placeholder="Set Name" 
-                            value = {setName}
-                            onChange = { (e) => setSetName(e.target.value) }
-                            style = {{ backgroundColor : 'transparent', color: 'white' }}
-                            required
-                        />
+                        <div className="form-group col-md-4">
+                            <label htmlFor="setName">Enter a unique Set Name</label>
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                id="setName" 
+                                placeholder="Set Name" 
+                                value = {setName}
+                                onChange = { (e) => setSetName(e.target.value) }
+                                style = {{ backgroundColor : 'transparent', color: 'white' }}
+                                required
+                            />
+                        </div>
+
                     </div>
-
-                </div>
+                }
 
                 <div className = 'form-row mb-4'>
 
@@ -96,4 +107,4 @@ const CreateSetFormComponent = () => {
     )
 }
 
-export default CreateSetFormComponent
+export default withRouter(CreateSetFormComponent)

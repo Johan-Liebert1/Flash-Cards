@@ -16,7 +16,7 @@ const CardSetDisplayComponent = ({ index, cardSet, setId, setName, history }) =>
 
     const redirectToCards = () => {
         dispatch( getCardsFromSet(userLoginInfo.token, setId) )   
-        history.push(`/cardsets/${setName}/${setId}/cards`)
+        history.push(`/cardsets/${setName.replace(/\s/g, '_')}/${setId}/cards`)
     }
 
 

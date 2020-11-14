@@ -25,7 +25,7 @@ const EditCardsComponent = ({ question, answer, cardId, match }) => {
     const editCard = (e) => {
         e.preventDefault()
         setIsEditing(!isEditing)
-        dispatch( editCardAction(userLoginInfo.token, newQuestion, newAnswer, cardId, match.params.setId) )
+        dispatch( editCardAction(userLoginInfo.token, newQuestion, newAnswer, cardId) )
     }
 
     const deleteCard = (e) => {
