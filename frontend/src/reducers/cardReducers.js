@@ -1,5 +1,6 @@
 export const cardsReducers = (state = {}, action) => {
     switch (action.type) {
+
         case 'CARDS_FROM_SET_REQUEST':
             return { loading : true }
 
@@ -16,20 +17,26 @@ export const cardsReducers = (state = {}, action) => {
             return { loading: true, cards: state.cards }       
         
         case 'EDIT_CARD_SUCCESS':
+
             const editedCards = state.cards.map(card => {
                 if (card._id === action.payload.cardId) {
                     card.question = action.payload.question
                     card.answer = action.payload.answer
                 }
                 return card
-            })
+            });
             return { loading: false, cards: editedCards }
 
         case 'DELETE_CARD_REQUEST':
             return { loading: true, cards: state.cards }
 
         case 'DELETE_CARD_SUCCESS':
-            const filteredCards = state.cards.filter(card => card._id !== action.payload.cardId)
+            // action.payload is the cardId here
+            const filteredCards = state.cards.filter(card => {
+                return card._id !== action.payload
+            });
+
+            
             return { loading: false, cards: filteredCards }
 
 

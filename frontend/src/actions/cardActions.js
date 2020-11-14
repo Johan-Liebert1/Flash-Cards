@@ -106,10 +106,12 @@ export const deleteCardAction = (userToken, cardId, setId) => async (dispatch) =
 
         const {data} = await axios.delete(`/api/cardsets/${setId}/card/${cardId}`, config)
 
+        // card deleted from database, now delete it from the state
         dispatch({
             type: 'DELETE_CARD_SUCCESS',
             payload: cardId
         })
+
     }
 
     catch (error) {

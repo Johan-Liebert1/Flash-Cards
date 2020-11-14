@@ -60,3 +60,10 @@ export const userRegister = (username, password) => async (dispatch) => {
     }
 
 } 
+
+
+export const userLogoutAction = () => (dispatch) => {
+    dispatch({ type: "USER_LOGOUT_REQUEST" })
+
+    dispatch({ type : "USER_LOGOUT_SUCCESS" })
+}

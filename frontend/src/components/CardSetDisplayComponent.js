@@ -43,7 +43,8 @@ const CardSetDisplayComponent = ({ index, cardSet, setId, setName, history }) =>
         borderRadius: '0px',
         borderBottom: '2px solid white',
         outline: 'none',
-        color: 'white'
+        color: 'white',
+        fontSize: '1.5rem'
     }
 
     return (

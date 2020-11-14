@@ -2,9 +2,11 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllCardSets } from '../actions/cardSetActions'
 import CardSetDisplayComponent from '../components/CardSetDisplayComponent'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 
 import NavbarComponent from '../components/NavbarComponent'
+import '../styles/AnimationStyles.css'
 
 const CardSetsScreen = () => {
 
@@ -21,20 +23,22 @@ const CardSetsScreen = () => {
         <div>
             <NavbarComponent homeNavbar />
             <div className = 'container'>
-                <div className = 'row'>
+                <TransitionGroup className = 'row' >
                     {   cardSets && 
                         cardSets.map(
                             (set, index) => 
-                            <CardSetDisplayComponent 
-                                index={index + 1} 
-                                key={set._id} 
-                                cardSet={set}
-                                setId = {set._id}
-                                setName = {set.setName}
-                            />
+                            <CSSTransition key = {set._id} classNames = 'fade' timeout = {700}>
+                                <CardSetDisplayComponent 
+                                    index={index + 1} 
+                                    key={set._id} 
+                                    cardSet={set}
+                                    setId = {set._id}
+                                    setName = {set.setName}
+                                />
+                            </CSSTransition>
                         )
                     }
-                </div>
+                </TransitionGroup>
             </div>
 
         </div>

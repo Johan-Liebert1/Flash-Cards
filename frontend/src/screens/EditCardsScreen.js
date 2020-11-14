@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import EditCardsComponent from '../components/EditCardsComponent'
 import NavbarComponent from '../components/NavbarComponent'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
+
+import '../styles/AnimationStyles.css'
 
 const EditCardsScreen = ({ match }) => {
     const { cards } = useSelector(state => state.cards)
@@ -19,19 +22,21 @@ const EditCardsScreen = ({ match }) => {
                     {'< Go To Cards'}
                 </Link>
 
-                <div className = 'row'>
+                <TransitionGroup className = 'row'>
                 { !cards ? <h1>Nothing to edit as there are no cards in this set</h1>:
 
                     cards.map(card => 
-                        <EditCardsComponent
-                            question = {card.question}
-                            answer = { card.answer }
-                            key = {card._id}
-                            cardId = {card._id}
-                        />
+                        <CSSTransition key = {card._id} classNames = 'fade' timeout = {700}>
+                            <EditCardsComponent
+                                question = {card.question}
+                                answer = { card.answer }
+                                key = {card._id}
+                                cardId = {card._id}
+                            />
+                        </CSSTransition>
                         )
                 }
-                </div>
+                </TransitionGroup>
             </div>
         </div>
     )

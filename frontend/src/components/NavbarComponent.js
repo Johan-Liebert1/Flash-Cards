@@ -1,15 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, withRouter } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import '../styles/NavbarComponentStyles.css'
+import { userLogoutAction } from '../actions/userActions'
 
 const NavbarComponent = ({ history, location, match, homeNavbar }) => {
+    const dispatch = useDispatch()
     const { userLoginInfo } = useSelector(state => state.userLoginInfo)
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
-    // console.log('location =', location)
-    // console.log('history =', history)
-    // console.log('match =', match)
+    const triggerModal = () => {
+        setIsModalOpen(!isModalOpen)
+    }
+
+    const logoutUserHandler = () => {
+        dispatch(userLogoutAction())
+
+        history.push('/')
+    }
 
     return (
         <nav className = 'container-new'>
@@ -50,11 +59,24 @@ const NavbarComponent = ({ history, location, match, homeNavbar }) => {
                 }
                 </div>
 
-                <div >
-                    <Link to = '/cardsets' className = 'profile' >
-                        <span> {userLoginInfo ? userLoginInfo.username : ''} </span>
-                    </Link>
+                <div className = 'profile-container' >
+                    <div className = 'profile' onClick = {triggerModal}>
+
+                        <span> Welcome, {userLoginInfo ? userLoginInfo.username : ''} </span>
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                        </svg>
+
+                    </div>
+
+                    {isModalOpen && 
+                        <div className = 'user-profile-modal'>
+                            <p className = 'profile-link'>Profile</p>
+                            <p className = 'profile-link' onClick = {logoutUserHandler}>Logout</p>
+                        </div>
+                    }
                 </div>
+
         </nav>
     )
 }

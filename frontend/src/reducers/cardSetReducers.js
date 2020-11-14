@@ -7,7 +7,6 @@ export const cardSetReducers = (state = {}, action) => {
 
         case 'ALL_CARDSETS_SUCCESS':
             let to_return =  { loading: false, cardSets : action.payload }
-            console.log(to_return)
             return to_return
 
         case 'ALL_CARDSETS_FAIL':
