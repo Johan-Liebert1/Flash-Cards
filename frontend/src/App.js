@@ -7,6 +7,7 @@ import CreateSetScreen from './screens/CreateSetScreen';
 import FlashCardsScreen from './screens/FlashCardsScreen';
 import EditCardsScreen from './screens/EditCardsScreen';
 import AddCardsToSetScreen from './screens/AddCardsToSetScreen';
+import FooterComponent from './components/FooterComponent';
 
 function App() {
     return (
@@ -47,7 +48,7 @@ function App() {
                 path = '/cardsets/:setName/:setId/cards/add'
                 render = { (routeProps) => <AddCardsToSetScreen {...routeProps} /> } 
             />
-
+            <FooterComponent />
         </BrowserRouter>
     );
 }

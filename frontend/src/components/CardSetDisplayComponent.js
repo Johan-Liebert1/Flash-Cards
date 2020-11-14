@@ -48,7 +48,7 @@ const CardSetDisplayComponent = ({ index, cardSet, setId, setName, history }) =>
 
     return (
         <>
-        <div className = 'card-container col-md-3' onClick = {redirectToCards}>
+        <div className = 'card-container col-lg-3 col-md-5' onClick = {redirectToCards}>
             <div id = 'index'>
                 <h1> {index > 9 ? index : `0${index}`} </h1>
             </div>
