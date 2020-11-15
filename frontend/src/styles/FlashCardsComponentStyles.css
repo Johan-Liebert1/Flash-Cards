@@ -10,14 +10,14 @@
     border-radius: 1rem;
     margin: 3rem auto;
     background: linear-gradient(90deg, #01408871 0%, #000a5f 100%);
-    transform: translateY(0%);
-    transition: all ease 0.3s;
+    
+    /* flip-animation-text */
+    perspective: 1000px;
+
 }
 
 .flash-card-container:hover {
     cursor: pointer;
-    transform: translateY(-5%);
-    transition: all ease 0.3s;
 }
 
 #index {
@@ -40,4 +40,9 @@
 
 #content h3 {
     color: white;
+}
+
+
+.card-row {
+    width: 100%;
 }

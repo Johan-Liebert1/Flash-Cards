@@ -21,17 +21,17 @@ const FlashCardsScreen = () => {
     return (
         <div>
             <NavbarComponent />
-            <div className = 'container mt-3 '>
+            <div className = 'container mt-3'>
                 { cards ? cards.length === 0 ? <h1>This set does not have any cards</h1> :
                 <div className = 'card-btn-container'>
 
-                    <div className = 'row card-row'>
-                        <FlashCardsComponent 
-                            question = {cards[index].question}
-                            answer = {cards[index].answer}
-                            index = {index + 1}
-                        />
-                    </div>
+                    {/* <div className = 'row card-row'> */}
+                    <FlashCardsComponent 
+                        question = {cards[index].question}
+                        answer = {cards[index].answer}
+                        index = {index + 1}
+                    />
+                    {/* </div> */}
 
                     <div id = 'buttons-and-index'>
                         <div

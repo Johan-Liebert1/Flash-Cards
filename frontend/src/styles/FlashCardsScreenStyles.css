@@ -5,10 +5,10 @@
     justify-content: center;
     align-items: center;
 }
-
+/* 
 .card-row {
     width: 100%;
-}
+} */
 
 #buttons-and-index {
     display: flex;
