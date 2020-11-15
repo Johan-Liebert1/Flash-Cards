@@ -1,0 +1,130 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 75px;
+    padding-top: 1rem;
+    /* background-color: aliceblue; */
+}
+
+.profile-container {
+    position: relative;
+}
+
+.modal-off {
+    display: none;
+}
+
+.user-profile-modal {
+    position: absolute;
+    top: 150%;
+    right: 0%;
+    background-color: rgba(0, 0, 0, 0.3);
+    width: 150px;
+    padding: 1rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9;
+}
+
+.profile-link {
+    width: 100%;
+    padding: 0.5rem 0;
+    text-align: center;
+    border-radius: 0.5rem;
+}
+
+.home-link {
+    color: white;
+    text-decoration: none;
+}
+
+.home-link:active {
+    color: white;
+    text-decoration: none;
+}
+
+#side-menu {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#left-side-menu {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 60%;
+    z-index: 9;
+    background-color:  rgba(2, 32, 60);
+    padding-left: 1rem;
+}
+
+#left-side-menu-container {
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#right-side-menu {
+    position: fixed;
+    right:0;
+    top:0;
+    width: 40%;
+    height: 100%;
+    z-index: 9;
+    opacity: 0.1;
+    background-color: black;
+}
+
+.m-link-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 10%;
+    width: 100%;
+    /* padding-left: 1rem; */
+    margin: 0.5rem auto;
+    justify-content: flex-start;
+}
+
+.m-link-active {
+    border-left: 5px solid rgb(98, 110, 227);
+}
+
+.svg {
+    align-self: center;
+    /* display: inline-block; */
+    /* height: 100%; */
+}
+
+.m-nav-link {
+    height: 100%;
+    color: rgb(220, 220, 220);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-left: 1rem;
+}
+
+.m-nav-icon {
+    transform: translate(-50%, -50%);
+}
+
+#close-sidebar {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 10;
+}

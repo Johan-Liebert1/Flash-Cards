@@ -7,6 +7,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 import NavbarComponent from '../components/NavbarComponent'
 import '../styles/AnimationStyles.css'
+import MobileNavbarComponent from '../components/MobileNavbarComponent'
 
 const CardSetsScreen = () => {
 
@@ -19,9 +20,13 @@ const CardSetsScreen = () => {
         dispatch( getAllCardSets(userLoginInfo.token) )    
     }, [dispatch, userLoginInfo])
 
+    const smallWindow = window.innerWidth < 900
+
     return (
         <div>
-            <NavbarComponent homeNavbar />
+            {smallWindow ? <MobileNavbarComponent homeNavbar/> :
+                <NavbarComponent homeNavbar />
+            }
             <div className = 'container'>
                 <TransitionGroup className = 'row' >
                     {   cardSets && 

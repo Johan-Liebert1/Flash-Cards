@@ -9,7 +9,6 @@ import '../styles/CardSetDisplayComponentStyles.css'
 const CardSetDisplayComponent = ({ index, cardSet, setId, setName, history }) => {
     const dispatch = useDispatch()
     const { userLoginInfo } = useSelector(state => state.userLoginInfo)
-    const { cards } = useSelector(state => state.cards)
 
     const [isEditing, setIsEditing] = useState(false)
     const [newSetName, setNewSetName] = useState(setName)
@@ -47,9 +46,14 @@ const CardSetDisplayComponent = ({ index, cardSet, setId, setName, history }) =>
         fontSize: '1.5rem'
     }
 
+    const smallScreen = window.innerWidth < 750
+
     return (
         <>
-        <div className = 'card-container col-lg-3 col-md-5' onClick = {redirectToCards}>
+
+        {smallScreen && <div className = 'col-1'></div>}
+
+        <div className = 'card-container col-lg-3 col-md-5 col-10' onClick = {redirectToCards}>
             <div id = 'index'>
                 <h1> {index > 9 ? index : `0${index}`} </h1>
             </div>

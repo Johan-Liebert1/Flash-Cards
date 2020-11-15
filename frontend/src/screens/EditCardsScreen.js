@@ -6,13 +6,19 @@ import NavbarComponent from '../components/NavbarComponent'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 import '../styles/AnimationStyles.css'
+import MobileNavbarComponent from '../components/MobileNavbarComponent'
 
 const EditCardsScreen = ({ match }) => {
     const { cards } = useSelector(state => state.cards)
+    const smallWindow = window.innerWidth < 900
+
+    // navbar breakpoint at 900px
 
     return (
         <div>
-            <NavbarComponent />
+            {smallWindow ? <MobileNavbarComponent/> :
+                <NavbarComponent />
+            }
 
             <div className = 'container mt-4'>
 

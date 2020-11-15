@@ -13,7 +13,7 @@ const FlashCardsComponent = ({ question, answer, index }) => {
         <div className = 'row'>
             <div
                 className = {
-                    `flash-card-container col-md-5 col-10`
+                    `flash-card-container col-md-7 col-lg-5 col-xl-4 col-10`
                 }
 
                 onClick = {() => setIsFlipped(!isFlipped)}
@@ -32,7 +32,7 @@ const FlashCardsComponent = ({ question, answer, index }) => {
 
             <div 
                 className = {
-                    `flash-card-container col-md-5 col-10`
+                    `flash-card-container col-md-7 col-lg-5 col-xl-4 col-10`
                 }
                 onClick = {() => setIsFlipped(!isFlipped)}
             >
@@ -46,6 +46,7 @@ const FlashCardsComponent = ({ question, answer, index }) => {
             </div>
             
         </div>
+        
         </ReactCardFlip>
         </div>
     )

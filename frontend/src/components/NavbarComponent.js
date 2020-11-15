@@ -30,7 +30,13 @@ const NavbarComponent = ({ history, location, match, homeNavbar }) => {
 
             <div id = 'other-links'>
                 <div >
-                    <Link to = '/cardsets/create' className = 'nav-link'>
+                    <Link 
+                        to = '/cardsets/create' 
+                        className = {
+                            `nav-link 
+                            ${match.url === '/cardsets/create' ? 'nav-link-active' : '' }`
+                        }
+                    >
                         <span> Create a New Set </span>
                     </Link>
                 </div>
@@ -40,7 +46,10 @@ const NavbarComponent = ({ history, location, match, homeNavbar }) => {
                     <div >
                         <Link 
                             to = {`/cardsets/${match.params.setName}/${match.params.setId}/cards/add`} 
-                            className = 'nav-link'
+                            className = {
+                                `nav-link 
+                                ${match.url === `/cardsets/${match.params.setName}/${match.params.setId}/cards/add` ? 'nav-link-active' : '' }`
+                            }
                         >
                             <span> Add Cards </span>
                         </Link>
@@ -49,7 +58,10 @@ const NavbarComponent = ({ history, location, match, homeNavbar }) => {
                     <div >
                         <Link 
                             to = {`/cardsets/${match.params.setName}/${match.params.setId}/cards/edit`} 
-                            className = 'nav-link'
+                            className = {
+                                `nav-link 
+                                ${match.url === `/cardsets/${match.params.setName}/${match.params.setId}/cards/edit` ? 'nav-link-active' : '' }`
+                            }
                         >
                             <span> Edit Cards </span>
                         </Link>

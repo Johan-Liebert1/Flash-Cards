@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import FlashCardsComponent from '../components/FlashCardsComponent'
+import MobileNavbarComponent from '../components/MobileNavbarComponent'
 import NavbarComponent from '../components/NavbarComponent'
 
 import '../styles/FlashCardsScreenStyles.css'
@@ -18,9 +19,13 @@ const FlashCardsScreen = () => {
         index - 1 < 0 ? setIndex(cards.length - 1) : setIndex(index - 1)
     }
 
+    const smallWindow = window.innerWidth < 900
+
     return (
         <div>
-            <NavbarComponent />
+            {smallWindow ? <MobileNavbarComponent /> :
+                <NavbarComponent />
+            }
             <div className = 'container mt-3'>
                 { cards ? cards.length === 0 ? <h1>This set does not have any cards</h1> :
                 <div className = 'card-btn-container'>
