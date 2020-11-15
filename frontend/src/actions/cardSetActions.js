@@ -1,9 +1,9 @@
 import axios from 'axios'
 import { addCardsToSet } from './cardActions'
 
-export const getAllCardSets = (userToken) => async (dispatch) => {
+export const getAllCardSets = (userToken) => async (dispatch, getState) => {
     try {
-        dispatch({ type: "ALL_CARDSETS_REQUEST" })
+        await dispatch({ type: "ALL_CARDSETS_REQUEST" })
 
         const config = {
             headers : {
@@ -13,17 +13,17 @@ export const getAllCardSets = (userToken) => async (dispatch) => {
 
         const { data } = await axios.get('/api/cardsets', config)
 
-        dispatch({
+        await dispatch({
             type: 'ALL_CARDSETS_SUCCESS',
             payload: data
         })
 
+        localStorage.setItem('cardSets', JSON.stringify(getState().cardSets))
+
     }
 
     catch (error) {
-        console.log('carset request error = ', error)
-
-        dispatch({
+        await dispatch({
             type: 'ALL_CARDSETS_FAIL',
             payload: error
         })
@@ -32,7 +32,7 @@ export const getAllCardSets = (userToken) => async (dispatch) => {
 }
 
 
-export const createNewCardSet = (userToken, setName, cardsList) => async (dispatch) => {
+export const createNewCardSet = (userToken, setName, cardsList) => async (dispatch, getState) => {
     try {
         dispatch({ type: 'CREATE_CARDSET_REQUEST' })
 
@@ -44,14 +44,14 @@ export const createNewCardSet = (userToken, setName, cardsList) => async (dispat
 
         const { data } = await axios.post('/api/cardsets', { setName }, config)
 
-        console.log('carset create data = ', data)
-
         dispatch({
             type: 'CREATE_CARDSET_SUCCESS',
             payload: data
         })
 
         await dispatch( addCardsToSet(userToken, data._id, cardsList) )
+
+        localStorage.setItem('cardSets', JSON.stringify(getState().cardSets))
 
     }
 
@@ -66,7 +66,7 @@ export const createNewCardSet = (userToken, setName, cardsList) => async (dispat
 }
 
 
-export const editCardSetNameAction = (userToken, setId, newName) => async (dispatch) => {
+export const editCardSetNameAction = (userToken, setId, newName) => async (dispatch, getState) => {
     try {
         dispatch({ type: 'CARDSET_EDIT_NAME_REQUEST' })
 
@@ -85,6 +85,9 @@ export const editCardSetNameAction = (userToken, setId, newName) => async (dispa
                                         )
 
         dispatch({ type : 'CARDSET_EDIT_NAME_SUCCESS', payload: { setId, newName } })
+
+        localStorage.setItem('cardSets', JSON.stringify(getState().cardSets))
+
     }
 
     catch (error) {
@@ -97,7 +100,7 @@ export const editCardSetNameAction = (userToken, setId, newName) => async (dispa
 }
 
 
-export const deleteCardSetAction = (userToken, setId) => async (dispatch) => {
+export const deleteCardSetAction = (userToken, setId) => async (dispatch, getState) => {
     try {
         dispatch({ type: 'CARDSET_DELETE_REQUEST' })
 
@@ -109,10 +112,12 @@ export const deleteCardSetAction = (userToken, setId) => async (dispatch) => {
         }
 
         const { data } = await axios.delete(`/api/cardsets/${setId}`, config)
-        console.log('cardsetdelete data = ', data)
 
         // create a reducer to filter this out from the state
         dispatch({ type : 'CARDSET_DELETE_SUCCESS', payload: setId })
+
+        localStorage.setItem('cardSets', JSON.stringify(getState().cardSets))
+
     }
 
     catch (error) {

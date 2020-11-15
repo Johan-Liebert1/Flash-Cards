@@ -1,11 +1,10 @@
 import axios from 'axios'
 
 
-export const addCardsToSet = (userToken, setId, cardsList) => async (dispatch) => {
+export const addCardsToSet = (userToken, setId, cardsList) => async (dispatch, getState) => {
     try {
 
-
-        dispatch({ type : 'ADD_CARDS_TO_SET_REQUEST' })
+        await dispatch({ type : 'ADD_CARDS_TO_SET_REQUEST' })
 
         const config = {
             'Content-Type' : "application/json",
@@ -21,10 +20,14 @@ export const addCardsToSet = (userToken, setId, cardsList) => async (dispatch) =
                         )
         
 
-        dispatch({
+        await dispatch({
             type: 'ADD_CARDS_TO_SET_SUCCESS',
             payload: data
         })
+
+        await dispatch( getCardsFromSet(userToken, setId) )
+
+        localStorage.setItem('cards', JSON.stringify(getState().cards))
 
     }
 
@@ -37,9 +40,9 @@ export const addCardsToSet = (userToken, setId, cardsList) => async (dispatch) =
 }
 
 
-export const getCardsFromSet = (userToken, setId) => async (dispatch) => {
+export const getCardsFromSet = (userToken, setId) => async (dispatch, getState) => {
     try {
-        dispatch({ type: 'CARDS_FROM_SET_REQUEST' })
+        await dispatch({ type: 'CARDS_FROM_SET_REQUEST' })
 
         const config = {
             headers : {
@@ -49,15 +52,17 @@ export const getCardsFromSet = (userToken, setId) => async (dispatch) => {
 
         const { data } = await axios.get(`/api/cardsets/${setId}/cards`, config)
 
-        dispatch({
+        await dispatch({
             type: 'CARDS_FROM_SET_SUCCESS',
             payload: data
         })
 
+        localStorage.setItem('cards', JSON.stringify(getState().cards))
+
     }
 
     catch (error) {
-        dispatch({
+        await dispatch({
             type: 'CARDS_FROM_SET_FAIL',
             payload: error
         })
@@ -65,7 +70,7 @@ export const getCardsFromSet = (userToken, setId) => async (dispatch) => {
 }
 
 
-export const editCardAction = (userToken, question, answer, cardId) => async (dispatch) => {
+export const editCardAction = (userToken, question, answer, cardId) => async (dispatch, getState) => {
     try {
         dispatch({ type: 'EDIT_CARD_REQUEST' })
 
@@ -83,6 +88,9 @@ export const editCardAction = (userToken, question, answer, cardId) => async (di
             type: 'EDIT_CARD_SUCCESS',
             payload: { cardId, question, answer }
         })
+
+        localStorage.setItem('cards', JSON.stringify(getState().cards))
+
     }
 
     catch (error) {
@@ -94,7 +102,7 @@ export const editCardAction = (userToken, question, answer, cardId) => async (di
 }
 
 
-export const deleteCardAction = (userToken, cardId, setId) => async (dispatch) => {
+export const deleteCardAction = (userToken, cardId, setId) => async (dispatch, getState) => {
     try {
         dispatch({ type: 'DELETE_CARD_REQUEST' })
 
@@ -111,6 +119,8 @@ export const deleteCardAction = (userToken, cardId, setId) => async (dispatch) =
             type: 'DELETE_CARD_SUCCESS',
             payload: cardId
         })
+
+        localStorage.setItem('cards', JSON.stringify(getState().cards))
 
     }
 

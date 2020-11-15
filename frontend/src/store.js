@@ -12,7 +12,18 @@ const reducers = combineReducers({
     cards: cardsReducers
 })
 
-const initialState = {}
+const userLoginInfoFromLS = localStorage.getItem('userLoginInfo') ? 
+                            JSON.parse(localStorage.getItem('userLoginInfo')) : {}
+
+const cardSetsFromLS = localStorage.getItem('cardSets') ? JSON.parse(localStorage.getItem('cardSets')) : {}
+
+const cardsFromLS = localStorage.getItem('cards') ? JSON.parse(localStorage.getItem('cards')) : {}
+
+const initialState = {
+    userLoginInfo : userLoginInfoFromLS,
+    cardSets : cardSetsFromLS,
+    cards : cardsFromLS
+}
 
 const store = createStore(
     reducers,

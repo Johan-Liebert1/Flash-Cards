@@ -17,7 +17,9 @@ const CardSetsScreen = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch( getAllCardSets(userLoginInfo.token) )    
+        
+        dispatch( getAllCardSets(userLoginInfo.token) )  
+
     }, [dispatch, userLoginInfo])
 
     const smallWindow = window.innerWidth < 900

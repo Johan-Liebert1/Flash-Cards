@@ -38,6 +38,10 @@ const CreateSetFormComponent = ({ isCreatingSet, match }) => {
             dispatch(addCardsToSet(userLoginInfo.token, match.params.setId, cardsList))
         }
 
+        setSetName('')
+        setData('')
+        setSeperator('')
+
     }
 
     return (

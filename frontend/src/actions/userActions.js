@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const userLogin = (username, password) => async (dispatch) => {
+export const userLogin = (username, password) => async (dispatch, getState) => {
     try {
         await dispatch({ type: "USER_LOGIN_REQUEST" })
 
@@ -16,6 +16,9 @@ export const userLogin = (username, password) => async (dispatch) => {
             type: 'USER_LOGIN_SUCCESS',
             payload: data
         })
+
+        localStorage.setItem('userLoginInfo', JSON.stringify(getState().userLoginInfo))
+
     }
 
     catch (error) {
@@ -30,7 +33,7 @@ export const userLogin = (username, password) => async (dispatch) => {
 
 export const userRegister = (username, password) => async (dispatch) => {
     try {
-        dispatch({ type: "USER_REGISTER_REQUEST" })
+        await dispatch({ type: "USER_REGISTER_REQUEST" })
 
         const config = {
             headers : {
@@ -40,12 +43,12 @@ export const userRegister = (username, password) => async (dispatch) => {
 
         const { data } = await axios.post('/user/register', { username, password }, config)
 
-        dispatch({
+        await dispatch({
             type: 'USER_REGISTER_SUCCESS',
             payload: data
         })
 
-        dispatch({
+        await dispatch({
             type: 'USER_LOGIN_SUCCESS',
             payload: data
         })
@@ -66,4 +69,9 @@ export const userLogoutAction = () => (dispatch) => {
     dispatch({ type: "USER_LOGOUT_REQUEST" })
 
     dispatch({ type : "USER_LOGOUT_SUCCESS" })
+
+    localStorage.setItem('userLoginInfo', '')
+    localStorage.setItem('cardSets', '')
+    localStorage.setItem('cards', '')
+
 }
