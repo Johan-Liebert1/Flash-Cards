@@ -6,7 +6,7 @@ import NavbarComponent from '../components/NavbarComponent'
 
 import '../styles/FlashCardsScreenStyles.css'
 
-const FlashCardsScreen = () => {
+const FlashCardsScreen = ({ match }) => {
     const { cards } = useSelector(state => state.cards)
 
     const [index, setIndex] = useState(0)
@@ -27,6 +27,7 @@ const FlashCardsScreen = () => {
                 <NavbarComponent />
             }
             <div className = 'container mt-3'>
+
                 { cards ? cards.length === 0 ? <h1>This set does not have any cards</h1> :
                 <div className = 'card-btn-container'>
 

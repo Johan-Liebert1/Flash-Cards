@@ -29,7 +29,10 @@ const CardSetsScreen = () => {
             {smallWindow ? <MobileNavbarComponent homeNavbar/> :
                 <NavbarComponent homeNavbar />
             }
-            <div className = 'container'>
+            <div className = 'container mt-3'>
+                <h2 
+                    style = {{ textAlign: 'center', color: 'rgb(200, 200, 200)' }}
+                >Card Sets for - {userLoginInfo.username}</h2>
                 <TransitionGroup className = 'row' >
                     {   cardSets && 
                         cardSets.map(
