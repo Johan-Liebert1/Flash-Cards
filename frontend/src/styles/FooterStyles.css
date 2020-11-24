@@ -1,22 +1,18 @@
 footer {
-    height: 50px;
-    margin-top: 2rem;
-    position: fixed;
-    bottom: 0px;
-    left: 0px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0,0,0, 0.2)
+	height: 7vh;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(0, 0, 0, 0.2);
 }
 
 footer svg {
-    opacity: 0.5;
-    color: white;
+	opacity: 0.5;
+	color: white;
 }
 
 footer svg:hover {
-    cursor: pointer;
-    opacity: 1;
+	cursor: pointer;
+	opacity: 1;
 }

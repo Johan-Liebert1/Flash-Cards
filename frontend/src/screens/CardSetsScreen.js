@@ -23,7 +23,13 @@ const CardSetsScreen = () => {
 	const smallWindow = window.innerWidth < 900;
 
 	return (
-		<motion.div variants={routeAnimations} initial="hidden" animate="show" exit="exit">
+		<motion.div
+			style={{ minHeight: "93vh", paddingBottom: "3rem" }}
+			variants={routeAnimations}
+			initial="hidden"
+			animate="show"
+			exit="exit"
+		>
 			{smallWindow ? <MobileNavbarComponent homeNavbar /> : <NavbarComponent homeNavbar />}
 			<div className="container mt-3">
 				<h2 style={{ textAlign: "center", color: "rgb(200, 200, 200)" }}>

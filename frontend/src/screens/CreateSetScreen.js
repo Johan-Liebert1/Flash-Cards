@@ -10,7 +10,13 @@ const CreateSetScreen = () => {
 	const smallWindow = window.innerWidth < 900;
 
 	return (
-		<motion.div variants={routeAnimations} initial="hidden" animate="show" exit="exit">
+		<motion.div
+			style={{ minHeight: "93vh" }}
+			variants={routeAnimations}
+			initial="hidden"
+			animate="show"
+			exit="exit"
+		>
 			{smallWindow ? <MobileNavbarComponent homeNavbar /> : <NavbarComponent homeNavbar />}
 			<CreateSetFormComponent isCreatingSet />
 		</motion.div>

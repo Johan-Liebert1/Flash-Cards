@@ -16,7 +16,13 @@ const EditCardsScreen = ({ match }) => {
 	// navbar breakpoint at 900px
 
 	return (
-		<motion.div variants={routeAnimations} initial="hidden" animate="show" exit="exit">
+		<motion.div
+			style={{ minHeight: "93vh", paddingBottom: "3rem" }}
+			variants={routeAnimations}
+			initial="hidden"
+			animate="show"
+			exit="exit"
+		>
 			{smallWindow ? <MobileNavbarComponent /> : <NavbarComponent />}
 
 			<div className="container mt-4">
