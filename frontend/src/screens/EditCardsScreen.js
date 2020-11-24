@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import EditCardsComponent from "../components/EditCardsComponent";
 import NavbarComponent from "../components/NavbarComponent";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { routeAnimations } from "../animations";
 
 import "../styles/AnimationStyles.css";
@@ -24,23 +23,20 @@ const EditCardsScreen = ({ match }) => {
 				<Link to={`/cardsets/${match.params.setName}/${match.params.setId}/cards`}>
 					{"< Go To Cards"}
 				</Link>
-
-				<TransitionGroup className="row">
+				<AnimatePresence>
 					{!cards ? (
 						<h1>Nothing to edit as there are no cards in this set</h1>
 					) : (
 						cards.map(card => (
-							<CSSTransition key={card._id} classNames="fade" timeout={700}>
-								<EditCardsComponent
-									question={card.question}
-									answer={card.answer}
-									key={card._id}
-									cardId={card._id}
-								/>
-							</CSSTransition>
+							<EditCardsComponent
+								question={card.question}
+								answer={card.answer}
+								key={card._id}
+								cardId={card._id}
+							/>
 						))
 					)}
-				</TransitionGroup>
+				</AnimatePresence>
 			</div>
 		</motion.div>
 	);

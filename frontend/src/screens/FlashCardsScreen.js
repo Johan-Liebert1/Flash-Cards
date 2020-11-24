@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { motion } from "framer-motion";
-import { routeAnimations } from "../animations";
+import { AnimatePresence, motion } from "framer-motion";
+import { cardTransitions, routeAnimations } from "../animations";
 
 import FlashCardsComponent from "../components/FlashCardsComponent";
 import MobileNavbarComponent from "../components/MobileNavbarComponent";
@@ -33,13 +33,22 @@ const FlashCardsScreen = ({ match }) => {
 						<h1>This set does not have any cards</h1>
 					) : (
 						<div className="card-btn-container">
-							{/* <div className = 'row card-row'> */}
-							<FlashCardsComponent
-								question={cards[index].question}
-								answer={cards[index].answer}
-								index={index + 1}
-							/>
-							{/* </div> */}
+							<AnimatePresence>
+								<motion.div
+									variants={cardTransitions}
+									initial="hidden"
+									animate="show"
+									exit="exit"
+									key={index}
+									style={{ width: "100%" }}
+								>
+									<FlashCardsComponent
+										question={cards[index].question}
+										answer={cards[index].answer}
+										index={index + 1}
+									/>
+								</motion.div>
+							</AnimatePresence>
 
 							<div id="buttons-and-index">
 								<div onClick={subtractFromIndex}>

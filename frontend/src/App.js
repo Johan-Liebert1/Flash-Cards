@@ -14,42 +14,44 @@ function App() {
 	const location = useLocation();
 
 	return (
-		<AnimatePresence>
-			<Switch location={location} key={location.pathname}>
-				<Route exact path="/" render={routeProps => <HomeScreen {...routeProps} />} />
+		<>
+			<AnimatePresence>
+				<Switch location={location} key={location.pathname}>
+					<Route exact path="/" render={routeProps => <HomeScreen {...routeProps} />} />
 
-				<Route
-					exact
-					path="/cardsets"
-					render={routeProps => <CardSetsScreen {...routeProps} />}
-				/>
+					<Route
+						exact
+						path="/cardsets"
+						render={routeProps => <CardSetsScreen {...routeProps} />}
+					/>
 
-				<Route
-					exact
-					path="/cardsets/create"
-					render={routeProps => <CreateSetScreen {...routeProps} />}
-				/>
+					<Route
+						exact
+						path="/cardsets/create"
+						render={routeProps => <CreateSetScreen {...routeProps} />}
+					/>
 
-				<Route
-					exact
-					path="/cardsets/:setName/:setId/cards"
-					render={routeProps => <FlashCardsScreen {...routeProps} />}
-				/>
+					<Route
+						exact
+						path="/cardsets/:setName/:setId/cards"
+						render={routeProps => <FlashCardsScreen {...routeProps} />}
+					/>
 
-				<Route
-					exact
-					path="/cardsets/:setName/:setId/cards/edit"
-					render={routeProps => <EditCardsScreen {...routeProps} />}
-				/>
+					<Route
+						exact
+						path="/cardsets/:setName/:setId/cards/edit"
+						render={routeProps => <EditCardsScreen {...routeProps} />}
+					/>
 
-				<Route
-					exact
-					path="/cardsets/:setName/:setId/cards/add"
-					render={routeProps => <AddCardsToSetScreen {...routeProps} />}
-				/>
-				<FooterComponent />
-			</Switch>
-		</AnimatePresence>
+					<Route
+						exact
+						path="/cardsets/:setName/:setId/cards/add"
+						render={routeProps => <AddCardsToSetScreen {...routeProps} />}
+					/>
+				</Switch>
+			</AnimatePresence>
+			<FooterComponent />
+		</>
 	);
 }
 
