@@ -21,5 +21,8 @@ A simple Full Stack CRUD app made using the MERN stack that allows users to crea
 ## Create a new Set
 ![image](/1demo/CreateSet.gif)
 
+## Edit a set
+![image](/1demo/Editingsets.gif)
+
 ## Edit Cards in a set
 ![image](/1demo/EditCards.gif)
