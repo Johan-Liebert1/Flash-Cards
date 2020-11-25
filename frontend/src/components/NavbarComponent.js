@@ -26,7 +26,7 @@ const NavbarComponent = ({ history, location, match, homeNavbar }) => {
 		<nav className="container-new">
 			<div>
 				<Link to="/cardsets" className="logo">
-					<h1>Flash Cards</h1>
+					<h2>Flash Cards</h2>
 				</Link>
 			</div>
 

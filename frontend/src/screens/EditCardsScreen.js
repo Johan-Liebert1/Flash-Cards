@@ -8,22 +8,22 @@ import { routeAnimations } from "../animations";
 
 import "../styles/AnimationStyles.css";
 import MobileNavbarComponent from "../components/MobileNavbarComponent";
+import useWindowSize from "../hooks/useWindowSize";
 
 const EditCardsScreen = ({ match }) => {
 	const { cards } = useSelector(state => state.cards);
-	const smallWindow = window.innerWidth < 900;
 
-	// navbar breakpoint at 900px
+	const size = useWindowSize();
 
 	return (
 		<motion.div
-			style={{ minHeight: "93vh", paddingBottom: "3rem" }}
+			style={{ minHeight: "93vh", paddingBottom: "3rem", overflow: "hidden" }}
 			variants={routeAnimations}
 			initial="hidden"
 			animate="show"
 			exit="exit"
 		>
-			{smallWindow ? <MobileNavbarComponent /> : <NavbarComponent />}
+			{size[0] < 900 ? <MobileNavbarComponent /> : <NavbarComponent />}
 
 			<div className="container mt-4">
 				<Link to={`/cardsets/${match.params.setName}/${match.params.setId}/cards`}>

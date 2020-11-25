@@ -8,6 +8,7 @@ import MobileNavbarComponent from "../components/MobileNavbarComponent";
 import NavbarComponent from "../components/NavbarComponent";
 
 import "../styles/FlashCardsScreenStyles.css";
+import useWindowSize from "../hooks/useWindowSize";
 
 const FlashCardsScreen = ({ match }) => {
 	const { cards } = useSelector(state => state.cards);
@@ -22,7 +23,7 @@ const FlashCardsScreen = ({ match }) => {
 		index - 1 < 0 ? setIndex(cards.length - 1) : setIndex(index - 1);
 	};
 
-	const smallWindow = window.innerWidth < 900;
+	const size = useWindowSize();
 
 	return (
 		<motion.div
@@ -32,7 +33,7 @@ const FlashCardsScreen = ({ match }) => {
 			animate="show"
 			exit="exit"
 		>
-			{smallWindow ? <MobileNavbarComponent /> : <NavbarComponent />}
+			{size[0] < 900 ? <MobileNavbarComponent /> : <NavbarComponent />}
 			<div className="container mt-3">
 				{cards ? (
 					cards.length === 0 ? (

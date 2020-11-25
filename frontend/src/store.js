@@ -25,8 +25,7 @@ const cardsFromLS = localStorage.getItem("cards") ? JSON.parse(localStorage.getI
 const initialState = {
 	userLoginInfo: userLoginInfoFromLS,
 	cardSets: cardSetsFromLS,
-	cards: cardsFromLS,
-	scrollingDisabled: false
+	cards: cardsFromLS
 };
 
 const store = createStore(reducers, initialState, composeWithDevTools(applyMiddleware(thunk)));

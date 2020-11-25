@@ -5,9 +5,10 @@ import { routeAnimations } from "../animations";
 import CreateSetFormComponent from "../components/CreateSetFormComponent";
 import MobileNavbarComponent from "../components/MobileNavbarComponent";
 import NavbarComponent from "../components/NavbarComponent";
+import useWindowSize from "../hooks/useWindowSize";
 
 const CreateSetScreen = () => {
-	const smallWindow = window.innerWidth < 900;
+	const size = useWindowSize();
 
 	return (
 		<motion.div
@@ -17,7 +18,7 @@ const CreateSetScreen = () => {
 			animate="show"
 			exit="exit"
 		>
-			{smallWindow ? <MobileNavbarComponent homeNavbar /> : <NavbarComponent homeNavbar />}
+			{size[0] < 900 ? <MobileNavbarComponent homeNavbar /> : <NavbarComponent homeNavbar />}
 			<CreateSetFormComponent isCreatingSet />
 		</motion.div>
 	);

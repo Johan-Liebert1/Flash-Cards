@@ -54,13 +54,36 @@ export const editCardsAnimation = {
 		y: 0,
 		transition: {
 			delay: 1,
-			duration: 1
+			duration: 0.75
 		}
 	},
 
 	exit: {
 		y: "-100vh",
 		transition: {
+			duration: 0.75
+		}
+	}
+};
+
+export const cardSetAnimations = {
+	hidden: {
+		scale: 0
+	},
+
+	show: {
+		scale: 1,
+		transition: {
+			ease: "easeInOut",
+			delay: 0.25,
+			duration: 0.5
+		}
+	},
+
+	exit: {
+		scale: 0,
+		transition: {
+			ease: "easeOut",
 			duration: 0.5
 		}
 	}

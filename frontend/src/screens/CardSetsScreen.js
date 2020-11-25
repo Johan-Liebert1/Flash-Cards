@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCardSets } from "../actions/cardSetActions";
 import CardSetDisplayComponent from "../components/CardSetDisplayComponent";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { routeAnimations } from "../animations";
 
 import NavbarComponent from "../components/NavbarComponent";
 import "../styles/AnimationStyles.css";
 import MobileNavbarComponent from "../components/MobileNavbarComponent";
+import useWindowSize from "../hooks/useWindowSize";
 
 const CardSetsScreen = () => {
 	const { userLoginInfo } = useSelector(state => state.userLoginInfo);
@@ -20,7 +20,7 @@ const CardSetsScreen = () => {
 		dispatch(getAllCardSets(userLoginInfo.token));
 	}, [dispatch, userLoginInfo]);
 
-	const smallWindow = window.innerWidth < 900;
+	const size = useWindowSize();
 
 	return (
 		<motion.div
@@ -30,15 +30,15 @@ const CardSetsScreen = () => {
 			animate="show"
 			exit="exit"
 		>
-			{smallWindow ? <MobileNavbarComponent homeNavbar /> : <NavbarComponent homeNavbar />}
+			{size[0] < 900 ? <MobileNavbarComponent homeNavbar /> : <NavbarComponent homeNavbar />}
 			<div className="container mt-3">
 				<h2 style={{ textAlign: "center", color: "rgb(200, 200, 200)" }}>
 					Card Sets for - {userLoginInfo.username}
 				</h2>
-				<TransitionGroup className="row">
-					{cardSets &&
-						cardSets.map((set, index) => (
-							<CSSTransition key={set._id} classNames="fade" timeout={700}>
+				<motion.div className="row">
+					<AnimatePresence>
+						{cardSets &&
+							cardSets.map((set, index) => (
 								<CardSetDisplayComponent
 									index={index + 1}
 									key={set._id}
@@ -46,9 +46,9 @@ const CardSetsScreen = () => {
 									setId={set._id}
 									setName={set.setName}
 								/>
-							</CSSTransition>
-						))}
-				</TransitionGroup>
+							))}
+					</AnimatePresence>
+				</motion.div>
 			</div>
 		</motion.div>
 	);

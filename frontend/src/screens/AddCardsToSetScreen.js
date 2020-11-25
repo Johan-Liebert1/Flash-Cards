@@ -6,9 +6,10 @@ import CreateSetFormComponent from "../components/CreateSetFormComponent";
 import MobileNavbarComponent from "../components/MobileNavbarComponent";
 import NavbarComponent from "../components/NavbarComponent";
 import { routeAnimations } from "../animations";
+import useWindowSize from "../hooks/useWindowSize";
 
 const AddCardsToSetScreen = ({ match }) => {
-	const smallWindow = window.innerWidth < 900;
+	const size = useWindowSize();
 
 	return (
 		<motion.div
@@ -18,7 +19,7 @@ const AddCardsToSetScreen = ({ match }) => {
 			animate="show"
 			exit="exit"
 		>
-			{smallWindow ? <MobileNavbarComponent /> : <NavbarComponent />}
+			{size[0] < 900 ? <MobileNavbarComponent /> : <NavbarComponent />}
 			<div className="container mt-3">
 				<Link to={`/cardsets/${match.params.setName}/${match.params.setId}/cards`}>
 					{"< Go To Cards"}
