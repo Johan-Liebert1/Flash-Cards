@@ -10,14 +10,18 @@ import "../styles/AnimationStyles.css";
 import MobileNavbarComponent from "../components/MobileNavbarComponent";
 import useWindowSize from "../hooks/useWindowSize";
 
-const CardSetsScreen = () => {
+const CardSetsScreen = ({ history }) => {
 	const { userLoginInfo } = useSelector(state => state.userLoginInfo);
 	const { cardSets } = useSelector(state => state.cardSets);
 
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(getAllCardSets(userLoginInfo.token));
+		if (userLoginInfo) {
+			dispatch(getAllCardSets(userLoginInfo.token));
+		} else {
+			history.push("/");
+		}
 	}, [dispatch, userLoginInfo]);
 
 	const size = useWindowSize();
