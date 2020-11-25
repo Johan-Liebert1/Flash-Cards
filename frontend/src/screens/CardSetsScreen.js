@@ -32,9 +32,15 @@ const CardSetsScreen = () => {
 		>
 			{size[0] < 900 ? <MobileNavbarComponent homeNavbar /> : <NavbarComponent homeNavbar />}
 			<div className="container mt-3">
-				<h2 style={{ textAlign: "center", color: "rgb(200, 200, 200)" }}>
-					Card Sets for - {userLoginInfo.username}
-				</h2>
+				<h1
+					style={{
+						textAlign: "center",
+						color: "rgb(220, 220, 220)",
+						fontWeight: "bolder"
+					}}
+				>
+					Your Sets
+				</h1>
 				<motion.div className="row">
 					<AnimatePresence>
 						{cardSets &&

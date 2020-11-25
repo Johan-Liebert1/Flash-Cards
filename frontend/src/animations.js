@@ -75,7 +75,7 @@ export const cardSetAnimations = {
 		scale: 1,
 		transition: {
 			ease: "easeInOut",
-			delay: 0.25,
+			delay: 0.5,
 			duration: 0.5
 		}
 	},

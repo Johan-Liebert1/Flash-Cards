@@ -14,6 +14,7 @@ const CardSetDisplayComponent = ({ index, cardSet, setId, setName, history }) =>
 	const { userLoginInfo } = useSelector(state => state.userLoginInfo);
 
 	const [isEditing, setIsEditing] = useState(false);
+	const [isEditDeleting, setIsEditDeleting] = useState(false);
 	const [newSetName, setNewSetName] = useState(setName);
 
 	const redirectToCards = () => {
@@ -44,7 +45,9 @@ const CardSetDisplayComponent = ({ index, cardSet, setId, setName, history }) =>
 		borderBottom: "2px solid white",
 		outline: "none",
 		color: "white",
-		fontSize: "1.5rem"
+		fontSize: "1.5rem",
+		textAlign: "center",
+		marginBottom: "0.9rem"
 	};
 
 	// size = [window.innerWidth, window.innerHeight]
@@ -80,7 +83,10 @@ const CardSetDisplayComponent = ({ index, cardSet, setId, setName, history }) =>
 						/>
 					)}
 
-					<p> {cardSet.cards.length} Cards in this set </p>
+					<p>
+						{cardSet.cards.length} {`Card${cardSet.cards.length === 1 ? "" : "s"}`} in
+						this set
+					</p>
 				</div>
 
 				<div id="icons">
@@ -111,7 +117,11 @@ const CardSetDisplayComponent = ({ index, cardSet, setId, setName, history }) =>
 						)}
 					</div>
 
-					<div onClick={clickOnDeleteDiv}>
+					<div
+						onClick={clickOnDeleteDiv}
+						onMouseEnter={() => setIsEditDeleting(!isEditDeleting)}
+						onMouseLeave={() => setIsEditDeleting(!isEditDeleting)}
+					>
 						<svg
 							id="delete"
 							width="1em"
