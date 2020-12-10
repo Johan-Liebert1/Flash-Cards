@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
 import { cardTransitions, routeAnimations } from "../animations";
@@ -23,7 +23,30 @@ const FlashCardsScreen = ({ match }) => {
 		index - 1 < 0 ? setIndex(cards.length - 1) : setIndex(index - 1);
 	};
 
+	const keyDownListener = e => {
+		switch (e.key) {
+			case "ArrowLeft":
+				subtractFromIndex();
+				break;
+
+			case "ArrowRight":
+				addToIndex();
+				break;
+
+			default:
+				break;
+		}
+	};
+
 	const size = useWindowSize();
+
+	useEffect(() => {
+		window.addEventListener("keydown", keyDownListener);
+
+		return () => {
+			window.removeEventListener("keydown", keyDownListener);
+		};
+	}, [keyDownListener]);
 
 	return (
 		<motion.div
